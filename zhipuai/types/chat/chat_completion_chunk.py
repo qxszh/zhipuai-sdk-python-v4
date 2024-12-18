@@ -1,5 +1,6 @@
 from typing import List, Optional, Dict, Any
 
+from ..audio import AudioResult
 from ...core import BaseModel
 
 __all__ = [
@@ -33,6 +34,7 @@ class ChoiceDeltaToolCall(BaseModel):
 class ChoiceDelta(BaseModel):
     content: Optional[str] = None
     role: Optional[str] = None
+    audio: Optional[AudioResult] = None
     tool_calls: Optional[List[ChoiceDeltaToolCall]] = None
 
 

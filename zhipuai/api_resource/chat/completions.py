@@ -10,6 +10,7 @@ from ...core import BaseAPI, deepcopy_minimal, maybe_transform, drop_prefix_imag
 from ...core import NotGiven, NOT_GIVEN, Headers, Query, Body
 from ...core import make_request_options
 from ...core import StreamResponse
+from ...types.audio import AudioRequest
 from ...types.chat.chat_completion import Completion
 from ...types.chat.chat_completion_chunk import ChatCompletionChunk
 from ...types.chat.code_geex import code_geex_params
@@ -47,7 +48,9 @@ class Completions(BaseAPI):
             extra_headers: Headers | None = None,
             extra_body: Body | None = None,
             timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
-            response_format : object | None = None
+            response_format : object | None = None,
+            modalities :  List[str] | None = None,
+            audio : AudioRequest | None = None
     ) -> Completion | StreamResponse[ChatCompletionChunk]:
         logger.debug(f"temperature:{temperature}, top_p:{top_p}")
         if temperature is not None and temperature != NOT_GIVEN:
@@ -91,7 +94,9 @@ class Completions(BaseAPI):
             "tool_choice": tool_choice,
             "meta": meta,
             "extra": maybe_transform(extra, code_geex_params.CodeGeexExtra),
-            "response_format": response_format
+            "response_format": response_format,
+            "modalities": modalities,
+            "audio": audio
         })
         return self._post(
             "/chat/completions",

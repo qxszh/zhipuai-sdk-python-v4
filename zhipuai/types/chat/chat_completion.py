@@ -1,5 +1,6 @@
 from typing import List, Optional
 
+from ..audio import AudioResult
 from ...core import BaseModel
 
 __all__ = ["Completion", "CompletionUsage"]
@@ -19,6 +20,7 @@ class CompletionMessageToolCall(BaseModel):
 class CompletionMessage(BaseModel):
     content: Optional[str] = None
     role: str
+    audio: Optional[AudioResult] = None
     tool_calls: Optional[List[CompletionMessageToolCall]] = None
 
 
